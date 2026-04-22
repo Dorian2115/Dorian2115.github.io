@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
   const SPOTIFY_CLIENT_ID = "d507e509a28740ab81b86008f5d98038";
-  const SPOTIFY_REDIRECT_URI = "https://jedenastek.github.io/";
+  const SPOTIFY_REDIRECT_URI = "https://dorian2115.github.io/";
   //prawidłowy callback uri
   const SPOTIFY_SCOPES = [
     "user-read-private",
@@ -32,8 +32,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const landingPage = document.getElementById("landing-page");
   const enterAppButton = document.getElementById("enterAppButton");
-  const enterSpotifyAppButtonOnLanding = landingPage
-    ? landingPage.querySelector("#enterSpotifyAppButtonLandingPage")
+  const enterSpotifyAppButtonOnLanding =
+    landingPage ?
+      landingPage.querySelector("#enterSpotifyAppButtonLandingPage")
     : null;
   const mainAppContent = document.getElementById("main-app-content");
   const navButtons = document.querySelectorAll(".nav-button");
@@ -48,15 +49,16 @@ document.addEventListener("DOMContentLoaded", () => {
   const userAvatarEl = document.getElementById("user-avatar");
   const logoutButton = document.getElementById("logout-button");
   const loginButtonsContainer = document.getElementById("login-buttons");
-  const spotifyLoginButtonHeader = loginButtonsContainer
-    ? loginButtonsContainer.querySelector("#enterSpotifyAppButtonHeader")
+  const spotifyLoginButtonHeader =
+    loginButtonsContainer ?
+      loginButtonsContainer.querySelector("#enterSpotifyAppButtonHeader")
     : null;
 
   const playlistListContainer = document.getElementById(
-    "playlist-list-container"
+    "playlist-list-container",
   );
   const currentPlaylistNameEl = document.getElementById(
-    "current-playlist-name"
+    "current-playlist-name",
   );
   const trackListContainer = document.getElementById("track-list-container");
   const backToPlaylistsButton = document.getElementById("back-to-playlists");
@@ -65,10 +67,10 @@ document.addEventListener("DOMContentLoaded", () => {
   const moodFilterButtons = document.querySelectorAll(".mood-filter-button");
 
   const recommendationListContainer = document.getElementById(
-    "recommendation-list-container"
+    "recommendation-list-container",
   );
   const backToPlaylistTracksButton = document.getElementById(
-    "backToPlaylistTracksButton"
+    "backToPlaylistTracksButton",
   );
 
   const topArtistsListEl = document.getElementById("top-artists-list");
@@ -77,28 +79,28 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const appSettingsForm = document.getElementById("app-settings-form");
   const appSettingsFeedbackEl = document.getElementById(
-    "app-settings-feedback"
+    "app-settings-feedback",
   );
   const accentColorInput = document.getElementById("accentColor");
   const resetAppSettingsButton = document.getElementById(
-    "reset-app-settings-button"
+    "reset-app-settings-button",
   );
 
   const contactMessageForm = document.getElementById("contact-message-form");
   const contactFormFeedbackEl = document.getElementById(
-    "contact-form-feedback"
+    "contact-form-feedback",
   );
   const contactEmailInput = document.getElementById("contactEmail");
   const messageSubjectSelect = document.getElementById("messageSubject");
   const otherSubjectContainer = document.getElementById(
-    "otherSubjectContainer"
+    "otherSubjectContainer",
   );
   const otherSubjectText = document.getElementById("otherSubjectText");
   const userMessageTextarea = document.getElementById("userMessage");
   const charCountEl = document.getElementById("charCount");
   const agreeToTermsCheckbox = document.getElementById("agreeToTerms");
   const resetContactFormButton = document.getElementById(
-    "reset-contact-form-button"
+    "reset-contact-form-button",
   );
 
   const aboutAppContentEl = document.getElementById("about-app-content");
@@ -108,20 +110,20 @@ document.addEventListener("DOMContentLoaded", () => {
   const deselectAllBtn = document.getElementById("deselectAllPlaylistsButton");
   const refreshBtn = document.getElementById("refreshRecommendationsButton");
   const addToPlaylistsBtn = document.getElementById(
-    "addToSelectedPlaylistsButton"
+    "addToSelectedPlaylistsButton",
   );
   const createNewPlaylistBtn = document.getElementById(
-    "createNewPlaylistButton"
+    "createNewPlaylistButton",
   );
   const cancelPlaylistChoiceBtn = document.getElementById(
-    "cancelPlaylistChoiceButton"
+    "cancelPlaylistChoiceButton",
   );
   const selectedPlaylistsContainer = document.getElementById(
-    "selectedPlaylistsContainer"
+    "selectedPlaylistsContainer",
   );
   const selectingTracksButtons = document.getElementById("tracks-nav");
   const selectingPlaylistsButtons = document.getElementById(
-    "playlist-choice-nav"
+    "playlist-choice-nav",
   );
 
   function generateRandomString(length) {
@@ -209,7 +211,7 @@ document.addEventListener("DOMContentLoaded", () => {
     try {
       const response = await fetch(
         "https://accounts.spotify.com/api/token",
-        payload
+        payload,
       );
       if (!response.ok) {
         const d = await response
@@ -218,7 +220,7 @@ document.addEventListener("DOMContentLoaded", () => {
         throw new Error(
           `HTTP ${response.status}: ${
             d.error_description || d.error || "Błąd serwera"
-          }`
+          }`,
         );
       }
       const data = await response.json();
@@ -283,7 +285,7 @@ document.addEventListener("DOMContentLoaded", () => {
     try {
       const response = await fetch(
         "https://accounts.spotify.com/api/token",
-        payload
+        payload,
       );
       if (!response.ok) {
         const d = await response.json().catch(() => ({
@@ -291,11 +293,11 @@ document.addEventListener("DOMContentLoaded", () => {
           error_description: "Nie udało się odczytać błędu serwera.",
         }));
         alert(
-          `Sesja wygasła (${d.error || response.status}). Zaloguj się ponownie.`
+          `Sesja wygasła (${d.error || response.status}). Zaloguj się ponownie.`,
         );
         clearSpotifyDataAndLogout();
         throw new Error(
-          d.error_description || d.error || `HTTP ${response.status}`
+          d.error_description || d.error || `HTTP ${response.status}`,
         );
       }
       const data = await response.json();
@@ -393,11 +395,13 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     }
     const targetView =
-      appState.currentView &&
-      document.getElementById(appState.currentView) &&
-      document.getElementById(appState.currentView).classList.contains("view")
-        ? appState.currentView
-        : "playlistsView";
+      (
+        appState.currentView &&
+        document.getElementById(appState.currentView) &&
+        document.getElementById(appState.currentView).classList.contains("view")
+      ) ?
+        appState.currentView
+      : "playlistsView";
     switchView(targetView);
   }
 
@@ -418,7 +422,7 @@ document.addEventListener("DOMContentLoaded", () => {
       });
 
     const recControlsContainer = document.getElementById(
-      "recommendationControlsContainer"
+      "recommendationControlsContainer",
     );
 
     if (viewId === "tracksView") {
@@ -471,7 +475,7 @@ document.addEventListener("DOMContentLoaded", () => {
       appState.tracksWithFeatures = [];
       if (trackListContainer) trackListContainer.innerHTML = "";
       const recControls = document.getElementById(
-        "recommendationControlsContainer"
+        "recommendationControlsContainer",
       );
       if (recControls) recControls.remove();
       switchView("playlistsView");
@@ -485,7 +489,7 @@ document.addEventListener("DOMContentLoaded", () => {
       ) {
         displaySpotifyPlaylistTracks(
           appState.selectedPlaylist.id,
-          appState.selectedPlaylist.name
+          appState.selectedPlaylist.name,
         );
         switchView("tracksView");
       } else if (appState.demoMode && appState.selectedPlaylist) {
@@ -505,7 +509,7 @@ document.addEventListener("DOMContentLoaded", () => {
         e.target.classList.add("active");
         appState.currentMoodFilter = key === "all" ? "all" : key;
         filterAndRenderTracks();
-      })
+      }),
     );
 
   async function fetchProfile() {
@@ -521,7 +525,7 @@ document.addEventListener("DOMContentLoaded", () => {
         alert(
           `Nie udało się pobrać profilu: ${
             error.message || "Nieznany błąd API"
-          }`
+          }`,
         );
         clearSpotifyDataAndLogout();
       }
@@ -533,9 +537,9 @@ document.addEventListener("DOMContentLoaded", () => {
     if (profile && userNameEl && userAvatarEl) {
       userNameEl.textContent = profile.display_name || profile.id;
       userAvatarEl.src =
-        profile.images && profile.images.length > 0
-          ? profile.images[0].url
-          : "https://via.placeholder.com/40";
+        profile.images && profile.images.length > 0 ?
+          profile.images[0].url
+        : "https://via.placeholder.com/40";
       userAvatarEl.alt = profile.display_name || "Avatar";
     }
   }
@@ -577,7 +581,7 @@ document.addEventListener("DOMContentLoaded", () => {
       trackListContainer.innerHTML = "<p>Ładowanie utworów ze Spotify...</p>";
     if (moodFilterControls) moodFilterControls.style.display = "none";
     const recControls = document.getElementById(
-      "recommendationControlsContainer"
+      "recommendationControlsContainer",
     );
     if (recControls) recControls.remove();
     if (!appState.accessToken) {
@@ -602,9 +606,9 @@ document.addEventListener("DOMContentLoaded", () => {
         li.style.cursor = "pointer";
         const img = document.createElement("img");
         img.src =
-          track.album.images && track.album.images.length > 0
-            ? track.album.images[0].url
-            : "https://via.placeholder.com/40";
+          track.album.images && track.album.images.length > 0 ?
+            track.album.images[0].url
+          : "https://via.placeholder.com/40";
         img.alt = track.name;
         img.style.width = "40px";
         img.style.height = "40px";
@@ -628,7 +632,7 @@ document.addEventListener("DOMContentLoaded", () => {
           switchView("recommendationsView");
           const similarTracks = await fetchSimilarTracksFromLastFM(
             track.artists[0].name,
-            track.name
+            track.name,
           );
           if (similarTracks && similarTracks.length > 0)
             renderSimilarLastFMTracksForDisplay(similarTracks);
@@ -663,7 +667,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const r = await fetch(`data/${fileNameWithoutExtension}.json`);
       if (!r.ok)
         throw new Error(
-          `Nie udało się pobrać ${fileNameWithoutExtension}.json: ${r.statusText}`
+          `Nie udało się pobrać ${fileNameWithoutExtension}.json: ${r.statusText}`,
         );
       return await r.json();
     } catch (e) {
@@ -692,14 +696,14 @@ document.addEventListener("DOMContentLoaded", () => {
       trackListContainer.innerHTML = "<p>Ładowanie utworów (demo)...</p>";
     if (moodFilterControls) moodFilterControls.style.display = "block";
     const recControls = document.getElementById(
-      "recommendationControlsContainer"
+      "recommendationControlsContainer",
     );
     if (recControls) recControls.style.display = "none";
 
     const tracksFile = playlistFromMock.tracks_data_file?.replace(".json", "");
     const featuresFile = playlistFromMock.audio_features_file?.replace(
       ".json",
-      ""
+      "",
     );
 
     if (!tracksFile || !featuresFile) {
@@ -725,7 +729,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (tracksData.items && featuresData.audio_features) {
       appState.tracksWithFeatures = tracksData.items.map((item) => {
         const feature = featuresData.audio_features.find(
-          (f) => f && f.id === item.track.id
+          (f) => f && f.id === item.track.id,
         );
         return { track: { ...item.track, ...(feature || {}) } };
       });
@@ -733,7 +737,7 @@ document.addEventListener("DOMContentLoaded", () => {
       if (moodFilterButtons)
         moodFilterButtons.forEach((btn) => btn.classList.remove("active"));
       const allMoodBtn = document.querySelector(
-        '#mood-filter-controls button[data-mood="all"]'
+        '#mood-filter-controls button[data-mood="all"]',
       );
       if (allMoodBtn) allMoodBtn.classList.add("active");
       filterAndRenderTracks();
@@ -749,7 +753,7 @@ document.addEventListener("DOMContentLoaded", () => {
   async function fetchSimilarTracksFromLastFM(artistName, trackName) {
     if (!LASTFM_API_KEY) {
       alert(
-        "Funkcja podobnych utworów jest niedostępna (brak konfiguracji API Last.fm)."
+        "Funkcja podobnych utworów jest niedostępna (brak konfiguracji API Last.fm).",
       );
       if (recommendationListContainer)
         recommendationListContainer.innerHTML =
@@ -774,8 +778,8 @@ document.addEventListener("DOMContentLoaded", () => {
         throw new Error(
           `Błąd Last.fm: ${response.statusText || "Nieznany"} - ${eT.substring(
             0,
-            100
-          )}`
+            100,
+          )}`,
         );
       }
       const data = await response.json();
@@ -783,8 +787,9 @@ document.addEventListener("DOMContentLoaded", () => {
         throw new Error(`Błąd Last.fm: ${data.message}`);
       }
       if (data.similartracks && data.similartracks.track) {
-        const tracks = Array.isArray(data.similartracks.track)
-          ? data.similartracks.track
+        const tracks =
+          Array.isArray(data.similartracks.track) ?
+            data.similartracks.track
           : [data.similartracks.track];
         return tracks.filter((t) => t && t.name && t.artist);
       } else {
@@ -825,7 +830,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     selectAllBtn.addEventListener("click", () => {
       const checkboxes = recommendationListContainer.querySelectorAll(
-        "input[type='checkbox']"
+        "input[type='checkbox']",
       );
       checkboxes.forEach((checkbox) => {
         checkbox.checked = true;
@@ -835,7 +840,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     deselectAllBtn.addEventListener("click", () => {
       const checkboxes = recommendationListContainer.querySelectorAll(
-        "input[type='checkbox']"
+        "input[type='checkbox']",
       );
       checkboxes.forEach((checkbox) => {
         checkbox.checked = false;
@@ -846,15 +851,15 @@ document.addEventListener("DOMContentLoaded", () => {
     addBtn.addEventListener("click", async () => {
       const selectedTracks = Array.from(
         recommendationListContainer.querySelectorAll(
-          "input[type='checkbox']:checked"
-        )
+          "input[type='checkbox']:checked",
+        ),
       )
         .map((checkbox) => {
           const li = checkbox.closest("li");
           const trackInfo = li ? li.querySelector("span") : null;
           if (trackInfo) {
             const index = Array.from(
-              recommendationListContainer.children
+              recommendationListContainer.children,
             ).indexOf(li);
             return lastfmTracks[index];
           }
@@ -883,8 +888,8 @@ document.addEventListener("DOMContentLoaded", () => {
     addToPlaylistsBtn.addEventListener("click", async () => {
       const selectedPlaylists = Array.from(
         selectedPlaylistsContainer.querySelectorAll(
-          "input[type='checkbox']:checked"
-        )
+          "input[type='checkbox']:checked",
+        ),
       ).map((checkbox) => checkbox.value);
 
       if (selectedPlaylists.length === 0) {
@@ -894,15 +899,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
       const tracksToAdd = Array.from(
         recommendationListContainer.querySelectorAll(
-          "input[type='checkbox']:checked"
-        )
+          "input[type='checkbox']:checked",
+        ),
       )
         .map((checkbox) => {
           const li = checkbox.closest("li");
           const trackInfo = li ? li.querySelector("span") : null;
           if (trackInfo) {
             const index = Array.from(
-              recommendationListContainer.children
+              recommendationListContainer.children,
             ).indexOf(li);
             return lastfmTracks[index];
           }
@@ -912,7 +917,7 @@ document.addEventListener("DOMContentLoaded", () => {
       try {
         const spotifyTrackUris = await findSpotifyTrackUris(
           tracksToAdd,
-          appState.accessToken
+          appState.accessToken,
         );
         console.log(spotifyTrackUris);
         if (spotifyTrackUris.length === 0) {
@@ -944,7 +949,7 @@ document.addEventListener("DOMContentLoaded", () => {
       ) {
         return await spotifyApi.searchTracks(
           `${track.name} ${track.artist.name}`,
-          appState.accessToken
+          appState.accessToken,
         );
       } else if (typeof track === "string") {
         return await spotifyApi.searchTracks(track, appState.accessToken);
@@ -976,8 +981,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
   async function renderPlaylistsForAddingTracks(selectedPlaylists) {
     const data = await spotifyApi.getUserPlaylists({ limit: 50 });
-    appState.playlists = Array.isArray(data.items)
-      ? data.items.map((p) => ({
+    appState.playlists =
+      Array.isArray(data.items) ?
+        data.items.map((p) => ({
           id: p.id,
           name: p.name,
           images: p.images,
@@ -996,9 +1002,9 @@ document.addEventListener("DOMContentLoaded", () => {
       li.classList.add("playlist-item");
       const img = document.createElement("img");
       img.src =
-        playlist.images && playlist.images.length > 0
-          ? playlist.images[0].url
-          : "https://via.placeholder.com/50";
+        playlist.images && playlist.images.length > 0 ?
+          playlist.images[0].url
+        : "https://via.placeholder.com/50";
       img.alt = playlist.name;
       img.style.width = "50px";
       img.style.height = "50px";
@@ -1034,9 +1040,9 @@ document.addEventListener("DOMContentLoaded", () => {
       const li = document.createElement("li");
       const img = document.createElement("img");
       img.src =
-        playlist.images && playlist.images.length > 0
-          ? playlist.images[0].url
-          : "https://via.placeholder.com/50";
+        playlist.images && playlist.images.length > 0 ?
+          playlist.images[0].url
+        : "https://via.placeholder.com/50";
       img.alt = playlist.name;
       img.style.width = "50px";
       img.style.height = "50px";
@@ -1113,18 +1119,18 @@ document.addEventListener("DOMContentLoaded", () => {
       if (
         trackObject.track &&
         featuresToChart.some(
-          (f) => typeof trackObject.track[f.valueKey] === "number"
+          (f) => typeof trackObject.track[f.valueKey] === "number",
         )
       ) {
         featuresToChart.forEach((feature) => {
           const val =
-            typeof trackObject.track[feature.valueKey] === "number"
-              ? trackObject.track[feature.valueKey]
-              : 0;
+            typeof trackObject.track[feature.valueKey] === "number" ?
+              trackObject.track[feature.valueKey]
+            : 0;
           chartHTML += `<div class="feature-bar-item"><span class="feature-bar-label">${
             feature.label
           } (${(val * 100).toFixed(
-            0
+            0,
           )}%)</span><div class="feature-bar-wrapper"><div class="feature-bar-value ${
             feature.class
           }" style="width: ${val * 100}%;"></div></div></div>`;
@@ -1143,7 +1149,7 @@ document.addEventListener("DOMContentLoaded", () => {
             if (od !== detailsOuterDiv) {
               od.style.display = "none";
               od.closest(".track-item")?.classList.remove(
-                "active-track-details"
+                "active-track-details",
               );
             }
           });
@@ -1282,11 +1288,11 @@ document.addEventListener("DOMContentLoaded", () => {
     a.forEach((art, i) => {
       const li = document.createElement("li");
       const img =
-        art.images && art.images.length > 0
-          ? `<img src="${art.images[art.images.length - 1].url}" alt="${
-              art.name
-            }" style="width:40px;height:40px;margin-right:10px;border-radius:50%;">`
-          : "";
+        art.images && art.images.length > 0 ?
+          `<img src="${art.images[art.images.length - 1].url}" alt="${
+            art.name
+          }" style="width:40px;height:40px;margin-right:10px;border-radius:50%;">`
+        : "";
       li.innerHTML = `${i + 1}. ${img} ${
         art.name
       } <span style="font-size:0.8em;color:#777;">(Popularność: ${
@@ -1306,13 +1312,13 @@ document.addEventListener("DOMContentLoaded", () => {
     t.forEach((trk, i) => {
       const li = document.createElement("li");
       const img =
-        trk.album.images && trk.album.images.length > 0
-          ? `<img src="${
-              trk.album.images[trk.album.images.length - 1].url
-            }" alt="${
-              trk.album.name
-            }" style="width:40px;height:40px;margin-right:10px;border-radius:4px;">`
-          : "";
+        trk.album.images && trk.album.images.length > 0 ?
+          `<img src="${
+            trk.album.images[trk.album.images.length - 1].url
+          }" alt="${
+            trk.album.name
+          }" style="width:40px;height:40px;margin-right:10px;border-radius:4px;">`
+        : "";
       li.innerHTML = `${i + 1}. ${img} ${trk.name} - <i>${(trk.artists || [])
         .map((a) => a.name)
         .join(", ")}</i>`;
@@ -1333,18 +1339,18 @@ document.addEventListener("DOMContentLoaded", () => {
       if (!trk) return;
       const li = document.createElement("li");
       const img =
-        trk.album.images && trk.album.images.length > 0
-          ? `<img src="${
-              trk.album.images[trk.album.images.length - 1].url
-            }" alt="${
-              trk.album.name
-            }" style="width:40px;height:40px;margin-right:10px;border-radius:4px;">`
-          : "";
+        trk.album.images && trk.album.images.length > 0 ?
+          `<img src="${
+            trk.album.images[trk.album.images.length - 1].url
+          }" alt="${
+            trk.album.name
+          }" style="width:40px;height:40px;margin-right:10px;border-radius:4px;">`
+        : "";
       const pAt = new Date(hItem.played_at).toLocaleString("pl-PL");
       li.innerHTML = `${img} ${trk.name} - <i>${(trk.artists || [])
         .map((a) => a.name)
         .join(
-          ", "
+          ", ",
         )}</i> <span style="font-size:0.8em; color: #777; margin-left: auto;">(${pAt})</span>`;
       recentlyPlayedListEl.appendChild(li);
     });
@@ -1377,7 +1383,7 @@ document.addEventListener("DOMContentLoaded", () => {
           if (el) {
             if (el.type === "radio") {
               const r = appSettingsForm.querySelector(
-                `input[name="${k}"][value="${sets[k]}"]`
+                `input[name="${k}"][value="${sets[k]}"]`,
               );
               if (r) r.checked = true;
             } else if (el.type === "checkbox") {
@@ -1390,7 +1396,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if (sets.accentColor) {
           document.documentElement.style.setProperty(
             "--primary-color",
-            sets.accentColor
+            sets.accentColor,
           );
           if (accentColorInput) accentColorInput.value = sets.accentColor;
         }
@@ -1403,11 +1409,9 @@ document.addEventListener("DOMContentLoaded", () => {
         if (fontSizeEl && sets.fontSize) {
           fontSizeEl.value = sets.fontSize;
           document.body.style.fontSize =
-            sets.fontSize === "small"
-              ? "0.9em"
-              : sets.fontSize === "large"
-              ? "1.1em"
-              : "1em";
+            sets.fontSize === "small" ? "0.9em"
+            : sets.fontSize === "large" ? "1.1em"
+            : "1em";
         }
       } catch (e) {}
     }
@@ -1439,7 +1443,7 @@ document.addEventListener("DOMContentLoaded", () => {
           validateField(
             formUserN,
             (v) => v.trim().length >= 3 && /^[a-zA-Z0-9\s]+$/.test(v),
-            "Nazwa: min 3 znaki (litery,cyfry,spacje)."
+            "Nazwa: min 3 znaki (litery,cyfry,spacje).",
           ) && valid;
       const recLimit = appSettingsForm.elements.recommendationLimit;
       if (recLimit)
@@ -1450,7 +1454,7 @@ document.addEventListener("DOMContentLoaded", () => {
               const n = parseInt(v, 10);
               return !isNaN(n) && n >= 5 && n <= 30;
             },
-            "Liczba od 5 do 30."
+            "Liczba od 5 do 30.",
           ) && valid;
 
       if (valid) {
@@ -1464,7 +1468,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if (d.accentColor)
           document.documentElement.style.setProperty(
             "--primary-color",
-            d.accentColor
+            d.accentColor,
           );
         if (d.theme === "dark") {
           document.body.classList.add("dark-theme");
@@ -1475,11 +1479,9 @@ document.addEventListener("DOMContentLoaded", () => {
         }
         if (d.fontSize)
           document.body.style.fontSize =
-            d.fontSize === "small"
-              ? "0.9em"
-              : d.fontSize === "large"
-              ? "1.1em"
-              : "1em";
+            d.fontSize === "small" ? "0.9em"
+            : d.fontSize === "large" ? "1.1em"
+            : "1em";
       } else {
         if (appSettingsFeedbackEl) {
           appSettingsFeedbackEl.textContent = "Popraw błędy.";
@@ -1522,33 +1524,33 @@ document.addEventListener("DOMContentLoaded", () => {
         validateField(
           contactEmailInput,
           (v) => v.trim() !== "" && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v),
-          "Podaj poprawny e-mail."
+          "Podaj poprawny e-mail.",
         ) && valid;
       valid =
         validateField(
           messageSubjectSelect,
           (v) => v !== "",
-          "Wybierz temat."
+          "Wybierz temat.",
         ) && valid;
       if (messageSubjectSelect.value === "other") {
         valid =
           validateField(
             otherSubjectText,
             (v) => v.trim() !== "",
-            "Opisz inny temat."
+            "Opisz inny temat.",
           ) && valid;
       }
       valid =
         validateField(
           userMessageTextarea,
           (v) => v.trim().length >= 10 && v.trim().length <= 1000,
-          "Wiadomość (10-1000 znaków)."
+          "Wiadomość (10-1000 znaków).",
         ) && valid;
       valid =
         validateField(
           agreeToTermsCheckbox,
           (v) => agreeToTermsCheckbox.checked,
-          "Musisz zaakceptować warunki."
+          "Musisz zaakceptować warunki.",
         ) && valid;
 
       if (valid) {
